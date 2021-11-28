@@ -1,0 +1,33 @@
+# Data Structures
+
+## WELCOME
+*	[Introduction](Introduction.md)
+*	[Contact](contact.md)
+## [BIG O NOTATION](bigONotation.md)
+*	[Introduction](bigONotation.md)
+*	[What is Big O used for](bigONotation.md)
+*	[How to test for Big O](bigONotation.md)
+*	[Big O Tasks](bigONotation.md)
+## [QUEUE](queue.md)
+*	[Introduction](queue.md)
+*	[What are Queues used for](queue.md)
+*	[Big O of Queues](queue.md)
+*	[Example](queue.md)
+*	[Problem to Solve](queue.md)
+## LINKED LISTS
+*	[Introduction](#)
+*	[What are Linked Lists used for](#)
+*	[Big O of Linked Lists](#)
+*	[Example](#)
+*	[Problem to Solve](#)
+## Recursion
+*	[Introduction](#)
+*	[What is Recursion used for](#)
+*	[How to do Recursion](#)
+*	[Recursion Tasks](#)
+## TREES
+*	[Introduction](#)
+*	[What are Trees used for](#)
+*	[Big O of Trees](#)
+*	[Example](#)
+*	[Problem to Solve](#)
