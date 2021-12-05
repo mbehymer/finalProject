@@ -14,12 +14,12 @@
 *	[Big O of Queues](queue.md)
 *	[Example](queue.md)
 *	[Problem to Solve](queue.md)
-## LINKED LISTS
-*	[Introduction](#)
-*	[What are Linked Lists used for](#)
-*	[Big O of Linked Lists](#)
-*	[Example](#)
-*	[Problem to Solve](#)
+## [LINKED LISTS](linkedLists.md)
+*	[Introduction](linkedLists.md)
+*	[What are Linked Lists used for](linkedLists.md)
+*	[Big O of Linked Lists](linkedLists.md)
+*	[Example](linkedLists.md)
+*	[Problem to Solve](linkedLists.md)
 ## Recursion
 *	[Introduction](#)
 *	[What is Recursion used for](#)
