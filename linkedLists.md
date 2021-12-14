@@ -1,7 +1,7 @@
 # LINKED LISTS
 *	[Introduction](#introduction)
-*	[What are Queues used for](#what-are-queues-used-for)
-*	[Big O of Queues](#big-o-of-queues)
+*	[How do Linked Lists Work](#how-do-link-lists-work)
+*	[Big O of Linked Lists](#big-o-of-linked-lists)
 *	[Example](#example)
 *	[Problem to Solve](#problem-to-solve)
 
@@ -26,6 +26,8 @@ print(my_train) # Result Train[1]<->[3]<->[2]
 my_train.insert_locomotive(5)
 print(my_train) # Result Train[5]<->[1]<->[3]<->[2]
 ```
+
+## How do Linked Lists Work
 
 ### Insert From the Caboose
 Our first insert in this case from the caboose would set the caboose and locomotive both equal to three because if we only have one wagon on the train then it is both the locomotive and the caboose. Next when we insert again from the caboose, the caboose now changes to the value 2 and the locomotive stays as the value 3. These are the steps you would take:
@@ -92,19 +94,303 @@ To do so is not as complicated as inserting after. Here is what you would do aft
 
 That's only two steps, way less then inserting after.
 
-## What are Queues used for
 
+## Big O of Linked Lists
+Lets discuss the Big O notation of linked lists. 
 
-## Big O of Queues
+**Finding a given Node**
+
+Since nothing uses an index, you have to always start at the head (locomotive) or the tail (caboose). From there you will loop through each node (wagon) until you have found the one you are looking for. This means that, unless you are looking for the head or the tail, you will always have an O of n or O(n) when looking for a given node.
+
+**Deleting or Inserting**
+
+When you are trying to delete a wagon or when you are inserting the deletion/insertion will always be O(n) unless it is at the locomotive(head) or the caboose (tail) of your train (linked list). This is because you do not need to move any of the other wagons, you only need to link some wagons up.
+
+Here is a table of how the big O looks:
+
+Task | Description | Big O
+---------------|-------------------|---------------
+insert_locomotive(data) | Add a wagon (node) from the Locomotive end. | O(1)
+insert_caboose(data) | Add a wagon (node) from the Caboose end. | O(1)
+insert_after(i, data) | Add a wagon (node) after the specified wagon. | O(n)
+remove_locomotive() | Remove the Locomotive. | O(1)
+remove_caboose() | Remove the Caboose. | O(1)
+remove_wagon(value) | Remove the wagon that has the specified value. | O(n)
+size() | Every wagon is tracked so you know how many wagons there are. | O(1)
+empty() | Check if size() is equal to 0 | O(1)
+
+So the
 
 
 ## Example
 
+Here is some example code. Use this when trying to solve the tasks below.
+
+```Python
+
+class Train:
+    """
+    Implement the Train data structure.  The Wagon class below is an 
+    inner class.  An inner class means that its real name is related to 
+    the outer class.  To create a Wagon object, we will need to 
+    specify Train.Wagon
+    """
+
+    class Wagon:
+        """
+        Each wagon of the train will have cargo and links to the 
+        previous and next wagon. 
+        """
+
+        def __init__(self, cargo):
+            """ 
+            Initialize the wagon to the cargo provided.  Initially
+            the links are unknown so they are set to None.
+            """
+            self.cargo = cargo
+            self.next = None
+            self.prev = None
+
+    def __init__(self):
+        """
+        Initialize an empty Train.
+        """
+        self.locomotive = None
+        self.caboose = None
+
+    def insert_locomotive(self, value):
+        """
+        Insert a new wagon at the front (i.e. the locomotive) of the Train.
+        """
+        # Create the new wagon
+        new_wagon = Train.Wagon(value)  
+        
+        # If the train is empty, then point both locomotive and caboose
+        # to the new wagon.
+        if self.locomotive is None:
+            self.locomotive = new_wagon
+            self.caboose = new_wagon
+        # If the train is not empty, then only self.locomotive will be
+        # affected.
+        else:
+            new_wagon.next = self.locomotive # Connect new wagon to the previous locomotive
+            self.locomotive.prev = new_wagon # Connect the previous locomotive to the new wagon
+            self.locomotive = new_wagon      # Update the locomotive to point to the new wagon
+
+    ################
+    # Start Task 1 #
+    ################
+    def insert_caboose(self, value):
+        """
+        Insert a new wagon at the back (i.e. the caboose) of the Train.
+        """
+        
+        # Create the new wagon
+        # TODO
+        
+        # If the train is empty, then point both locomotive and caboose
+        # to the new wagon.
+        # TODO
+
+        # If the train is not empty, then 
+        # only self.caboose will be affected.
+        # TODO
+        pass   
+
+    ##############
+    # End Task 1 #
+    ##############
+
+    ################
+    # Start Task 2 #
+    ################
+
+    def remove_locomotive(self):
+        """ 
+        Remove the first wagon (i.e. the locomotive) of the train.
+        """
+        # If the train has only one item in it, then set locomotive and caboose 
+        # to None resulting in an empty train.  This condition will also
+        # cover an empty train.  Its okay to set to None again.
+        # TODO
+
+        # If the train has more than one item in it, then only self.locomotive
+        # will be affected.
+        # TODO
+        pass
+
+    ##############
+    # End Task 2 #
+    ##############
+
+    def remove_caboose(self):
+        """
+        Remove the last wagon (i.e. the caboose) of the Wagon.
+        """
+        # If the train has only one item in it, then set locomotive and caboose 
+        # to None resulting in an empty train.  This condition will also
+        # cover an empty train.  Its okay to set to None again.
+        if self.locomotive == self.caboose:
+            self.locomotive = None
+            self.caboose = None
+        # If the train has more than one item in it, then only self.caboose
+        # will be affected.
+        elif self.caboose is not None:
+            self.caboose.prev.next = None  # Disconnect the second wagon from the first wagon
+            self.caboose = self.caboose.prev  # Update the locomotive to point to the second wagon
+
+    def insert_after(self, value, new_value):
+        """
+        Insert new_value after the first time you see value in
+        the train.
+        """
+        # Look for the wagon that matches value by starting at the 
+        # locomotive of the train.
+        curr = self.locomotive
+        while curr is not None:
+            if curr.cargo == value:
+                # If 'value' is at the end of the train,
+                # then we can call insert_caboose to add 'new_value'
+                if curr == self.caboose:
+                    self.insert_caboose(new_value)
+                # If not then we need to create a 
+                # new wagon and reconnect the train to insert the said wagon.
+                else:
+                    new_wagon = Train.Wagon(new_value)
+                    new_wagon.prev = curr       # Connect new wagon to the wagon containing 'value'
+                    new_wagon.next = curr.next  # Connect new wagon to the wagon after 'value'
+                    curr.next.prev = new_wagon  # Connect wagon after 'value' to the new wagon
+                    curr.next = new_wagon       # Connect the wagon containing 'value' to the new wagon
+                return # We can exit the function after we insert
+            curr = curr.next # Go to the next wagon to search for 'value'
+    
+    ################
+    # Start Task 3 #
+    ################
+    def remove(self, value):
+        """
+        Remove the first wagon that contains 'value'.
+        """
+        # Look for the first wagon that matches value
+
+        # Start your search at the locomotive
+        curr = self.locomotive
+        # Loop through the tain until you get to the caboose in # which case if you haven't found it end the loop
+        # TODO
+                # If the value is at the locomotive then we can just use our pre-written code to remove_locomotive()
+                # TODO
+                
+                # Else if the value is at the caboose of the train then use remove_caboose()
+                # TODO
+
+                # Otherwise if the value is anywhere else we will need to disconnect the current wagon and attach it previous and next to each other
+                # TODO
+        pass
+    ##############
+    # End Task 3 #
+    ##############
+
+    def __iter__(self):
+        """
+        Iterate foward through the train
+        """
+        curr = self.locomotive  # Start at the begining since this is a forward iteration.
+        while curr is not None:
+            yield curr.cargo  # Provide (yield) each item to the user
+            curr = curr.next # Go forward in the wagon
+
+    def __reversed__(self):
+        """
+        Iterate backward through the train
+        """
+        curr = self.caboose # Start at the end
+        while curr is not None:
+            yield curr.cargo # Yield the value
+            curr = curr.prev # Go backwards
+
+    def __str__(self):
+        """
+        Return a string representation of the train.
+        """
+        output = "Train["
+        first = True
+        for value in self:
+            if first:
+                first = False
+            else:
+                output += "]<->["
+            output += str(value)
+        output += "]"
+        return output
+
+```
+
 
 ## Problem to Solve
 
+Use the example code above and modify it to solve these tasks
 
 ### Task 1:
+```Python
+t = Train() # Initialize the train
+# Insert from the locomotive
+t.insert_locomotive(1)
+t.insert_locomotive(3)
+t.insert_locomotive(5)
+print(t) # Expected output Train[1]<->[3]<->[5]
 
+# Insert from the caboose
+t.insert_caboose(6)
+t.insert_caboose(4)
+t.insert_caboose(2)
+print(t) # Expected output 
+# Train[1]<->[3]<->[5]<->[6]<->[4]<->[2]
+
+```
 
 ### Task 2:
+```Python
+
+# Remove from the locomotive
+t.remove_locomotive()
+t.remove_locomotive()
+print(t) # Expected output Train[5]<->[6]<->[4]<->[2]
+
+# Remove from the caboose
+t.remove_caboose()
+t.remove_caboose()
+print(t) # Expected output 
+# Train[5]<->[6]
+
+```
+
+
+### Task 3:
+```Python
+# Insert 3 into the train after 1
+t.insert_after(1, 3)
+# Insert 5 into the train after 3
+t.insert_after(3, 5)
+# Insert 7 into the train after 5
+t.insert_after(5, 7)
+# Insert 9 into the train after 7
+t.insert_after(7, 9)
+print(t) # Expected output Train[1]<->[3]<->[5]<->[7]<->[9]<->[6]
+
+# Remove 3, 5 and 9 from the train
+t.remove(3)
+t.remove(5)
+t.remove(9)
+print(t) # Expected output [1]<->[7]<->[6]
+
+# What happens if nothing is inside the train?
+t.remove_locomotive()
+t.remove_locomotive()
+t.remove_locomotive()
+t.remove(1)
+t.remove_caboose()
+# Expected outcome nothing should happen, no errors
+
+```
+
+To see the answers go [here](train_solution.py) and run the code

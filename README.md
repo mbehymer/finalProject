@@ -22,7 +22,6 @@
 *	[Problem to Solve](linkedLists.md)
 ## Recursion
 *	[Introduction](#)
-*	[What is Recursion used for](#)
 *	[How to do Recursion](#)
 *	[Recursion Tasks](#)
 ## TREES
